@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        main{
+            display:grid;
+            grid-template-columns: auto auto auto auto;
+            width:60%;
+            margin:40px auto;
+            background-color: black;
+            gap:5px;
+            text-align: center;
+            border-radius: 10px;
+            padding:9px;
+            font-family: monospace;
+            font-size:2em;
+        }
+        div{
+            padding:15px;
+            background-color: orange;
+            border-radius:4px;
+            font-weight: bold;
+            cursor:pointer;
+
+        }
+        div:hover{
+            opacity:0.8;
+        }
+        #pantalla{
+            grid-column: 1/5;
+            padding:25px;
+            font-size:2.5em;
+            text-align: right;
+            font-weight: bolder;
+            background-color: rgba(192, 183, 183, 0.925);
+            border-radius:9px;
+        }
+        div:last-child{
+            grid-column:3/5;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section id="pantalla">0</section>
+        <div onclick="capturar(this)">7</div>
+        <div onclick="capturar(this)">8</div>
+        <div onclick="capturar(this)">9</div>
+        <div onclick="capturar(this)">*</div>
+        <div onclick="capturar(this)">4</div>
+        <div onclick="capturar(this)">5</div>
+        <div onclick="capturar(this)">6</div>
+        <div onclick="capturar(this)">-</div>
+        <div onclick="capturar(this)">1</div>
+        <div onclick="capturar(this)">2</div>
+        <div onclick="capturar(this)">3</div>
+        <div onclick="capturar(this)">+</div>
+        <div onclick="capturar(this)">0</div>
+        <div onclick="capturar(this)">.</div>
+        <div onclick="capturar(this)">/</div>
+        <div onclick="pi()">&pi;</div>
+        <div onclick="poner0()">AC</div>  
+        <div onclick="eliminarUltimo()">C</div>
+        <div onclick="resolver()">=</div>
+    </main>
+
+    <script>
+        var display = document.getElementById("pantalla")
+        function capturar(elemento){
+            if(elemento.innerHTML == "AC"){
+                display.innerHTML="0"
+            }else {
+                if (display.innerHTML=="0" && elemento.innerHTML >= 0 && elemento.innerHTML < 10 || display.innerHTML=="ERROR"){
+                    display.innerHTML=elemento.innerHTML
+                } else {   
+                    if(display.innerHTML.length<=18) {
+                         display.innerHTML=display.innerHTML+elemento.innerHTML
+                    }
+                }
+            }
+        }
+        function poner0(){
+            display.innerHTML="0"
+        }
+       
+        function resolver(){
+           var operacion = display.innerHTML
+           try {
+               display.innerHTML=eval(operacion)
+           } catch (error) {
+               display.innerHTML="ERROR"
+               mensaje=error;
+               console.log(error.message)
+           }
+        }
+
+        function eliminarUltimo(){
+            //Recoger lo que está en la pantalla
+            let texto = display.innerHTML
+               
+            //Eliminar el último caracter.  texto="hola"
+           /*  var resultado=""
+            for(x=0; x < texto.length-1;x++){
+                resultado += texto[x]
+            } */
+            //var resultado=texto.slice(0,texto.length-1)
+            var resultado=texto.substring(0,texto.length-1)
+             //Volver a pintar en la pantalla.
+            if(resultado.length == 0){
+                display.innerHTML="0"
+            } else {
+                display.innerHTML=resultado
+            }
+        }
+        function ponerPi(){
+            if(display.innerHTML=="0" || display.innerHTML=="ERROR"){
+                display.innerHTML="3.1416"
+            } else {
+                display.innerHTML=display.innerHTML+"3.1416"
+            }
+        }
+
+    /*    Hay tres métodos para extraer parte de un string:
+            slice(start, end)
+            substring(start, end)
+            substr(start, length) */
+
+
+    </script>
+</body>
+</html>
